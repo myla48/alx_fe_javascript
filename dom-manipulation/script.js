@@ -46,6 +46,31 @@ function addQuote() {
   document.getElementById("newQuoteCategory").value = "";
 }
 
+// Dynamically create the quote input form
+function createAddQuoteForm() {
+  const formContainer = document.createElement("div");
+
+  const quoteInput = document.createElement("input");
+  quoteInput.id = "newQuoteText";
+  quoteInput.type = "text";
+  quoteInput.placeholder = "Enter a new quote";
+
+  const categoryInput = document.createElement("input");
+  categoryInput.id = "newQuoteCategory";
+  categoryInput.type = "text";
+  categoryInput.placeholder = "Enter quote category";
+
+  const addButton = document.createElement("button");
+  addButton.textContent = "Add Quote";
+  addButton.onclick = addQuote;
+
+  formContainer.appendChild(quoteInput);
+  formContainer.appendChild(categoryInput);
+  formContainer.appendChild(addButton);
+
+  document.body.appendChild(formContainer);
+}
+
 // Populate category dropdown
 function populateCategories() {
   const filter = document.getElementById("categoryFilter");
@@ -135,6 +160,7 @@ async function syncWithServer() {
 
 // Initial setup
 loadQuotes();
+createAddQuoteForm();
 populateCategories();
 displayFilteredQuotes();
 
