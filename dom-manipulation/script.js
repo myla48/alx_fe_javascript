@@ -203,6 +203,12 @@ async function postQuotesToServer() {
     console.error("POST error:", error);
   }
 }
+// Wrapper function to sync quotes both ways
+async function syncQuotes() {
+  await postQuotesToServer();      // Send local quotes to server
+  await syncWithServer();          // Fetch and merge server quotes
+}
+
 
 
 // Initial setup
