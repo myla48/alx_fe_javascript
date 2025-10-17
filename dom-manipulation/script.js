@@ -183,6 +183,27 @@ async function syncWithServer() {
     alert("Quotes synced with server!");
   }
 }
+// Send quotes to simulated server (POST request)
+async function postQuotesToServer() {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(quotes)
+    });
+
+    if (response.ok) {
+      alert("Quotes successfully posted to server!");
+    } else {
+      alert("Failed to post quotes.");
+    }
+  } catch (error) {
+    console.error("POST error:", error);
+  }
+}
+
 
 // Initial setup
 loadQuotes();
