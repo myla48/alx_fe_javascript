@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dynamic Quote Generator</title>
+</head>
+<body>
+  <h1>Dynamic Quote Generator</h1>
+
+  <!-- Category Filter -->
+  <select id="categoryFilter">
+    <option value="all">All Categories</option>
+  </select>
+
+  <!-- Display Area -->
+  <div id="quoteDisplay" style="margin: 20px 0;"></div>
+
+  <!-- Show Random Quote Button -->
+  <button id="newQuote">Show New Quote</button>
+
+  <!-- File Import/Export -->
+  <div style="margin-top: 20px;">
+    <input type="file" id="importFile" />
+    <button onclick="exportToJson()">Export Quotes</button>
+  </div>
+
+  <!-- Script -->
+  <script src="script.js"></script>
+</body>
+</html>
