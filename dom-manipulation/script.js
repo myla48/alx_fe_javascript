@@ -1,4 +1,5 @@
 let quotes = [];
+let selectedCategory = "all"; // Track the current filter
 
 // Load quotes from localStorage
 function loadQuotes() {
@@ -13,13 +14,17 @@ function saveQuotes() {
 
 // Show a random quote
 function showRandomQuote() {
-  if (quotes.length === 0) {
-    alert("No quotes available.");
+  const filteredQuotes = selectedCategory === "all"
+    ? quotes
+    : quotes.filter(q => q.category === selectedCategory);
+
+  if (filteredQuotes.length === 0) {
+    alert("No quotes available in this category.");
     return;
   }
 
-  const randomIndex = Math.floor(Math.random() * quotes.length);
-  const quote = quotes[randomIndex];
+  const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
+  const quote = filteredQuotes[randomIndex];
 
   const display = document.getElementById("quoteDisplay");
   display.innerHTML = `<p>${quote.text} - <em>${quote.category}</em></p>`;
@@ -84,21 +89,25 @@ function populateCategories() {
   });
 
   const lastFilter = localStorage.getItem("lastFilter");
-  if (lastFilter) filter.value = lastFilter;
+  if (lastFilter) {
+    filter.value = lastFilter;
+    selectedCategory = lastFilter;
+  }
 }
 
 // Filter quotes by category
 function filterQuotes() {
-  const selected = document.getElementById("categoryFilter").value;
-  localStorage.setItem("lastFilter", selected);
+  selectedCategory = document.getElementById("categoryFilter").value;
+  localStorage.setItem("lastFilter", selectedCategory);
   displayFilteredQuotes();
 }
 
-// Display quotes based on filter
+// Display quotes based on selectedCategory
 function displayFilteredQuotes() {
-  const selected = document.getElementById("categoryFilter").value;
   const display = document.getElementById("quoteDisplay");
-  const filtered = selected === "all" ? quotes : quotes.filter(q => q.category === selected);
+  const filtered = selectedCategory === "all"
+    ? quotes
+    : quotes.filter(q => q.category === selectedCategory);
   display.innerHTML = filtered.map(q => `<p>${q.text} - <em>${q.category}</em></p>`).join("");
 }
 
