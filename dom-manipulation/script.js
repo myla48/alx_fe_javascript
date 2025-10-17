@@ -170,3 +170,5 @@ setInterval(syncWithServer, 30000);
 // Event listeners
 document.getElementById("newQuote").addEventListener("click", showRandomQuote);
 document.getElementById("categoryFilter").addEventListener("change", filterQuotes);
+document.getElementById("importFile").addEventListener("change", importFromJsonFile);
+
