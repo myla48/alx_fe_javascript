@@ -22,6 +22,15 @@
   <div style="margin-top: 20px;">
     <input type="file" id="importFile" />
     <button onclick="exportToJson()">Export Quotes</button>
+    <!-- Show random quote -->
+<button id="newQuote">Show New Quote</button>
+
+<!-- Export quotes -->
+<button onclick="exportToJson()">Export Quotes</button>
+
+<!-- Import quotes -->
+<input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+
   </div>
 
   <!-- Script -->
