@@ -12,7 +12,7 @@ function saveQuotes() {
   localStorage.setItem("quotes", JSON.stringify(quotes));
 }
 
-// Show a random quote
+// Show a random quote based on selectedCategory
 function showRandomQuote() {
   const filteredQuotes = selectedCategory === "all"
     ? quotes
