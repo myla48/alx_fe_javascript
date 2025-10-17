@@ -140,11 +140,58 @@ function importFromJsonFile(event) {
   fileReader.readAsText(event.target.files[0]);
 }
 
+// Fetch quotes from a simulated server
+async function fetchQuotesFromServer() {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const data = await response.json();
+
+    const formattedQuotes = data.slice(0, 5).map(post => ({
+      text: post.title,
+      category: "Server"
+    }));
+
+    return formattedQuotes;
+  } catch (error) {
+    console.error("Error fetching from server:", error);
+    return [];
+  }
+}
+
+// Sync with server and resolve conflicts
+async function syncWithServer() {
+  const serverQuotes = await fetchQuotesFromServer();
+  let conflictsResolved = 0;
+
+  serverQuotes.forEach(sq => {
+    const index = quotes.findIndex(lq => lq.text === sq.text);
+    if (index !== -1) {
+      quotes[index] = sq; // Overwrite local with server
+      conflictsResolved++;
+    } else {
+      quotes.push(sq);
+    }
+  });
+
+  saveQuotes();
+  populateCategories();
+  displayFilteredQuotes();
+
+  if (conflictsResolved > 0) {
+    alert(`${conflictsResolved} conflicts resolved using server data.`);
+  } else {
+    alert("Quotes synced with server!");
+  }
+}
+
 // Initial setup
 loadQuotes();
 createAddQuoteForm();
 populateCategories();
 displayFilteredQuotes();
+
+// Periodic sync every 30 seconds
+setInterval(syncWithServer, 30000);
 
 // Event listeners
 document.getElementById("newQuote").addEventListener("click", showRandomQuote);
